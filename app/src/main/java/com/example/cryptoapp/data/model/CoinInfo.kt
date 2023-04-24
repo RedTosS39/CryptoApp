@@ -1,5 +1,6 @@
 package com.example.cryptoapp.data.model
 
+
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
@@ -17,7 +18,6 @@ data class CoinInfo(
     val Internal: String,
     val Name: String,
     val ProofType: String,
-    val Rating: Rating,
     val Type: Int,
     val Url: String
 ) : Parcelable

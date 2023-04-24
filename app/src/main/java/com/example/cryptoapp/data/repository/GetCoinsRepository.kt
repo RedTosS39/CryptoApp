@@ -8,4 +8,6 @@ interface GetCoinsRepository {
    suspend fun getCoins() : CoinsModel
 
    suspend fun getCurrentCoin(coinsModel: CoinsModel) : List<Data>
+
+   suspend fun getImgUrl(data: Data) : String
 }

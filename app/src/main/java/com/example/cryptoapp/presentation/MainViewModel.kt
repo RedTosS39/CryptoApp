@@ -1,12 +1,9 @@
 package com.example.cryptoapp.presentation
 
-import android.icu.text.Transliterator.Position
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cryptoapp.data.model.CoinsModel
 import com.example.cryptoapp.data.model.Data
 import com.example.cryptoapp.data.repository.GetCoinsRepository
 import com.example.cryptoapp.data.repository.GetCoinsRepositoryImpl
