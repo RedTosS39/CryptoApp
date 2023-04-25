@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:layout_margin="2dp">
+    android:layout_margin="2dp"
+    android:gravity="center">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="2dp"
         android:elevation="4dp"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="3dp"
-        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -26,62 +26,35 @@
                 android:id="@+id/imgCryptoLogo"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:layout_margin="4dp"
                 android:contentDescription="Crypto logo"
                 android:src="@drawable/ic_launcher_foreground"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/guideline"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_begin="103dp" />
-
-
             <TextView
                 android:id="@+id/cryptoLabel"
+                style="@style/text_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="crypto label"
-                android:layout_margin="5dp"
                 app:layout_constraintBottom_toTopOf="@+id/tvUsd"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tvCryptoTitle"
+
+                app:layout_constraintStart_toEndOf="@+id/imgCryptoLogo"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tvUsd"
+                style="@style/text_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint=" USD"
-                android:layout_margin="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/currentPrice"
+                app:layout_constraintEnd_toEndOf="@+id/cryptoLabel"
+                app:layout_constraintStart_toStartOf="@+id/cryptoLabel"
                 app:layout_constraintTop_toBottomOf="@+id/cryptoLabel" />
-
-            <TextView
-                android:id="@+id/currentPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="CURRENT PRICE"
-                android:layout_margin="5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toBottomOf="@+id/tvCryptoTitle" />
-
-            <TextView
-                android:id="@+id/tvCryptoTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="CRYPTO NAME"
-                android:layout_margin="5dp"
-                app:layout_constraintBottom_toTopOf="@+id/currentPrice"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,9 +1,9 @@
-package com.example.cryptoapp.data.model
+package com.example.cryptoapp.domain.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class MetaData(
-    val Count: Int
+data class DomainUSD(
+    val PRICE: String,
 ) : Parcelable

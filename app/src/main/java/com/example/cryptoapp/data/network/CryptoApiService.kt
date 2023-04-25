@@ -13,7 +13,7 @@ interface CryptoApiService {
     //Get cat list
     @GET("data/top/mktcapfull")
     suspend fun getCoins(
-        @Query("limit") limit: Int = 10,
+        @Query("limit") limit: Int = 20,
         @Query("tsym") usd: String = "USD",
         @Query("api_key") api_key: String = API_CRYPTO_KEY) : CoinsModel
 

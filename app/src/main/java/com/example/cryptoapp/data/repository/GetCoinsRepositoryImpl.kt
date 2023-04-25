@@ -1,19 +1,22 @@
 package com.example.cryptoapp.data.repository
 
-import com.example.cryptoapp.data.model.CoinsModel
-import com.example.cryptoapp.data.model.Data
+import com.example.cryptoapp.data.model.*
 import com.example.cryptoapp.data.network.CryptoApiService
+import com.example.cryptoapp.domain.model.*
+import com.example.cryptoapp.domain.repository.GetCoinsRepository
 
 class GetCoinsRepositoryImpl : GetCoinsRepository {
-    override suspend fun getCoins(): CoinsModel {
+
+    private val mapper = CoinMapper()
+    override suspend fun getCoins(): DomainCoinModel {
+        return mapper.mapToDomainModel(getApiResult())
+    }
+
+    override suspend fun getDomainData(): List<DomainData> {
+        return mapper.mapList(getApiResult().Data)
+    }
+
+    private suspend fun getApiResult(): CoinsModel {
         return CryptoApiService.create().getCoins()
-    }
-
-    override suspend fun getCurrentCoin(coinsModel: CoinsModel) : List<Data> {
-        return coinsModel.Data
-    }
-
-    override suspend fun getImgUrl(data: Data): String {
-        return data.CoinInfo.ImageUrl
     }
 }
