@@ -10,7 +10,6 @@ import retrofit2.http.Query
 
 interface CryptoApiService {
 
-    //Get cat list
     @GET("data/top/mktcapfull")
     suspend fun getCoins(
         @Query("limit") limit: Int = 20,

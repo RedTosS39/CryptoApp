@@ -35,7 +35,6 @@ class CoinFragment : Fragment() {
     }
 
     companion object {
-
         fun newCoinFragmentInstance() : CoinFragment {
             return CoinFragment().apply {
                 arguments = Bundle().apply {
