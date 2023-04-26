@@ -1,12 +1,15 @@
 package com.example.cryptoapp.domain.usecase
 
 
+import android.util.Log
+import androidx.lifecycle.LiveData
 import com.example.cryptoapp.domain.model.DomainData
-import com.example.cryptoapp.domain.repository.GetCoinsRepository
+import com.example.cryptoapp.domain.repository.Repository
 
-class GetCurrentCoinUseCase(private val repository: GetCoinsRepository) {
+class GetCurrentCoinUseCase(private val repository: Repository) {
 
-    suspend operator fun invoke() : List<DomainData> {
-      return repository.getCoins().Data
+    suspend operator fun invoke(): LiveData<List<DomainData>> {
+
+        return repository.getDomainData()
     }
 }
