@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
             adapter = cryptoAdapter
 
             viewModel.coinInfoList.observe(this@MainActivity) {
+                Log.d("AAAA", "getApiResult: ${it.get(0).domainCoinInfo.FullName} ")
                 cryptoAdapter.submitList(it)
             }
 
