@@ -18,6 +18,7 @@ class RepositoryImpl : Repository {
     }
 
     private suspend fun getApiResult() {
+
         val list = CryptoApiService.create().getCoins()
         liveData.value = mapper.mapList(list.Data)
     }

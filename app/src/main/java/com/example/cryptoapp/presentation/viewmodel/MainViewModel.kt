@@ -9,6 +9,7 @@ import com.example.cryptoapp.domain.repository.Repository
 import com.example.cryptoapp.data.repository.RepositoryImpl
 import com.example.cryptoapp.domain.model.DomainData
 import com.example.cryptoapp.domain.usecase.GetCurrentCoinUseCase
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
@@ -22,8 +23,10 @@ class MainViewModel : ViewModel() {
 
     init {
         viewModelScope.launch {
-
-            _coinInfoList.value = getCurrentCoinUseCase.invoke().value
+            while (true) {
+                _coinInfoList.value = getCurrentCoinUseCase.invoke().value
+                delay(10000)
+            }
         }
     }
 }
