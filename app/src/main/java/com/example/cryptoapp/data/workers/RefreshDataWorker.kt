@@ -35,8 +35,14 @@ class RefreshDataWorker(
     companion object {
         const val WORKER_NAME = "RefreshDataWorker"
 
-        fun makeRequest() : OneTimeWorkRequest {
-            return OneTimeWorkRequestBuilder<RefreshDataWorker>().build()
+        fun makeRequest(): OneTimeWorkRequest {
+            val constraints = Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build()
+
+            return OneTimeWorkRequestBuilder<RefreshDataWorker>()
+                .setConstraints(constraints)
+                .build()
         }
     }
 }
