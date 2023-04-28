@@ -1,30 +1,20 @@
 package com.example.cryptoapp.presentation.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import com.example.cryptoapp.R
 import com.example.cryptoapp.databinding.ActivityMainBinding
 import com.example.cryptoapp.presentation.adapter.CryptoAdapter
+import com.example.cryptoapp.presentation.view.CoinFragment.Companion.EXTRA_STRING
 import com.example.cryptoapp.presentation.viewmodel.MainViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.coroutineContext
 
 class MainActivity : AppCompatActivity() {
 
-
     private var coinFragment: CoinFragment? = null
     private lateinit var fragmentContainerView: FragmentContainerView
-
     private val viewModel by lazy {
         ViewModelProvider(this)[MainViewModel::class.java]
     }
@@ -56,17 +46,18 @@ class MainActivity : AppCompatActivity() {
             adapter = cryptoAdapter
 
             viewModel.coinInfoList.observe(this@MainActivity) {
-                Log.d("AAAA", "getApiResult: ${it.get(0).domainCoinInfo.FullName} ")
                 cryptoAdapter.submitList(it)
             }
 
             cryptoAdapter.onItemClickListener = {
                 coinFragment = CoinFragment.newCoinFragmentInstance()
                 coinFragment?.arguments?.apply {
-                    putString("KEY", it.domainCoinInfo.FullName)
+                    putString(EXTRA_STRING, it.domainCoinInfo.FullName)
                 }
                 launchFragment(coinFragment!!)
             }
         }
+
+        binding.recycler.itemAnimator = null
     }
 }

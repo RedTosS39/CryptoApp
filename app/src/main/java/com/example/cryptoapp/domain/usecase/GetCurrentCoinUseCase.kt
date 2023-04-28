@@ -8,7 +8,7 @@ import com.example.cryptoapp.domain.repository.Repository
 
 class GetCurrentCoinUseCase(private val repository: Repository) {
 
-    suspend operator fun invoke(): LiveData<List<DomainData>> {
+     operator fun invoke(): LiveData<List<DomainData>> {
 
         return repository.getDomainData()
     }
