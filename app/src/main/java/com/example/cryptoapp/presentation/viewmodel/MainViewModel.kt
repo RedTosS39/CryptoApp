@@ -1,6 +1,8 @@
 package com.example.cryptoapp.presentation.viewmodel
 
+import android.app.Application
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,9 +14,9 @@ import com.example.cryptoapp.domain.usecase.GetCurrentCoinUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
+class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val repository: Repository = RepositoryImpl()
+    private val repository: Repository = RepositoryImpl(application)
     private val getCurrentCoinUseCase = GetCurrentCoinUseCase(repository)
 
     private var _coinInfoList = MutableLiveData<List<DomainData>>()
@@ -22,11 +24,7 @@ class MainViewModel : ViewModel() {
         get() = _coinInfoList
 
     init {
-        viewModelScope.launch {
-            while (true) {
-                _coinInfoList.value = getCurrentCoinUseCase.invoke().value
-                delay(10000)
-            }
-        }
+        _coinInfoList.value = getCurrentCoinUseCase.invoke().value
+
     }
 }

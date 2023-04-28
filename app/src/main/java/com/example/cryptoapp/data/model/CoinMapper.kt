@@ -9,7 +9,7 @@ class CoinMapper {
         DomainCoinInfo(
             coinInfo.FullName,
             coinInfo.Id,
-            coinInfo.ImageUrl,
+            ImageUrl =  IMG_URL + coinInfo.ImageUrl,
             coinInfo.Name,
             coinInfo.Url
         )
@@ -21,4 +21,8 @@ class CoinMapper {
         )
 
     fun mapList(list: List<Data>): List<DomainData> = list.map { mapToDomainData(it) }
+
+    companion object {
+        private const val IMG_URL="https://www.cryptocompare.com/"
+    }
 }
