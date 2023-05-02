@@ -1,5 +1,7 @@
 package com.example.cryptoapp.data.model
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.cryptoapp.domain.model.*
 
 class CoinMapper {
@@ -9,7 +11,7 @@ class CoinMapper {
         DomainCoinInfo(
             coinInfo.FullName,
             coinInfo.Id,
-            ImageUrl =  IMG_URL + coinInfo.ImageUrl,
+            ImageUrl = IMG_URL + coinInfo.ImageUrl,
             coinInfo.Name,
             coinInfo.Url
         )
@@ -23,6 +25,6 @@ class CoinMapper {
     fun mapList(list: List<Data>): List<DomainData> = list.map { mapToDomainData(it) }
 
     companion object {
-        private const val IMG_URL="https://www.cryptocompare.com/"
+        private const val IMG_URL = "https://www.cryptocompare.com/"
     }
 }
