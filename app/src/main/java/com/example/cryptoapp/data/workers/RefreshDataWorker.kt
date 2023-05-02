@@ -22,8 +22,7 @@ class RefreshDataWorker(
             try {
                 val list = apiService.getCoins().Data
                 mapper.mapList(list)
-            } catch (_: Exception) {
-            }
+            } catch (_: Exception) { }
             delay(10000)
         }
     }
