@@ -5,5 +5,7 @@ import androidx.lifecycle.LiveData
 import com.example.cryptoapp.domain.model.DomainData
 
 interface Repository {
-     fun getDomainData() : LiveData<List<DomainData>>
+     suspend fun getDomainData() : LiveData<List<DomainData>>
+
+     fun loadData()
 }

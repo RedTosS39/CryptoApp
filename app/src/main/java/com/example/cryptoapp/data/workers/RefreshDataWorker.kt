@@ -15,17 +15,13 @@ class RefreshDataWorker(
 ) : CoroutineWorker(context, workerParams) {
 
     private val mapper = CoinMapper()
-    private val scope = CoroutineScope(Dispatchers.IO)
     private val apiService = CryptoApiService.create()
 
     override suspend fun doWork(): Result {
         while (true) {
             try {
-                scope.launch {
-                    val list = apiService.getCoins()
-                    mapper.mapList(list.Data)
-                }
-
+                val list = apiService.getCoins().Data
+                mapper.mapList(list)
             } catch (_: Exception) {
             }
             delay(10000)
@@ -35,8 +31,14 @@ class RefreshDataWorker(
     companion object {
         const val WORKER_NAME = "RefreshDataWorker"
 
-        fun makeRequest() : OneTimeWorkRequest {
-            return OneTimeWorkRequestBuilder<RefreshDataWorker>().build()
+        fun makeRequest(): OneTimeWorkRequest {
+            val constraints = Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build()
+
+            return OneTimeWorkRequestBuilder<RefreshDataWorker>()
+                .setConstraints(constraints)
+                .build()
         }
     }
 }
