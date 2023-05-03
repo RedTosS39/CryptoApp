@@ -8,10 +8,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.cryptoapp.R
 import com.example.cryptoapp.databinding.ActivityMainBinding
 import com.example.cryptoapp.presentation.adapter.CryptoAdapter
+import com.example.cryptoapp.presentation.di.DaggerAppComponent
 import com.example.cryptoapp.presentation.view.CoinFragment.Companion.EXTRA_STRING
 import com.example.cryptoapp.presentation.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
+    val component = DaggerAppComponent.create().inject(this)
 
     private var coinFragment: CoinFragment? = null
     private lateinit var fragmentContainerView: FragmentContainerView
