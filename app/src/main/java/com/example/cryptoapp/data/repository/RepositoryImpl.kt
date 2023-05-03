@@ -10,12 +10,16 @@ import com.example.cryptoapp.data.network.CryptoApiService
 import com.example.cryptoapp.data.workers.RefreshDataWorker
 import com.example.cryptoapp.domain.model.DomainData
 import com.example.cryptoapp.domain.repository.Repository
+import javax.inject.Inject
 
-class RepositoryImpl(private val application: Application) : Repository {
+class RepositoryImpl @Inject constructor(
+    private val application: Application,
+    private val mapper: CoinMapper,
+) : Repository {
 
     private val apiService = CryptoApiService.create()
     private val liveData = MutableLiveData<List<DomainData>>()
-    private val mapper = CoinMapper()
+
 
     override suspend fun getDomainData(): LiveData<List<DomainData>> {
         getApiResult()
@@ -26,8 +30,8 @@ class RepositoryImpl(private val application: Application) : Repository {
         try {
             val result = apiService.getCoins()
             liveData.value = mapper.mapList(result.Data)
+        } catch (_: Exception) {
         }
-        catch (_: Exception) {}
     }
 
     override fun loadData() {

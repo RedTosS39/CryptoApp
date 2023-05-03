@@ -10,10 +10,12 @@ import com.example.cryptoapp.domain.model.DomainData
 import com.example.cryptoapp.domain.repository.Repository
 import com.example.cryptoapp.domain.usecase.GetCurrentCoinUseCase
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: Repository = RepositoryImpl(application)
+
     private val getCurrentCoinUseCase = GetCurrentCoinUseCase(repository)
 
     private var _coinInfoList = MutableLiveData<List<DomainData>>()
