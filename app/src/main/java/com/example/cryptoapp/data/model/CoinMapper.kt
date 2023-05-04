@@ -1,10 +1,12 @@
 package com.example.cryptoapp.data.model
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.example.cryptoapp.domain.model.*
+import com.example.cryptoapp.domain.model.DomainCoinInfo
+import com.example.cryptoapp.domain.model.DomainData
+import com.example.cryptoapp.domain.model.DomainDisplay
+import com.example.cryptoapp.domain.model.DomainUSD
+import javax.inject.Inject
 
-class CoinMapper {
+class CoinMapper @Inject constructor(){
     private fun mapToDomainUSD(usd: USD) = DomainUSD(usd.PRICE)
     private fun mapToDomainDisplay(display: DISPLAY) = DomainDisplay(mapToDomainUSD(display.USD))
     private fun mapToDomainCoinInfo(coinInfo: CoinInfo) =
@@ -22,7 +24,8 @@ class CoinMapper {
             mapToDomainDisplay(data.DISPLAY)
         )
 
-    fun mapList(list: List<Data>): List<DomainData> = list.map { mapToDomainData(it) }
+    fun mapList(dataList: List<Data>): List<DomainData> = dataList.map { mapToDomainData(it) }
+
 
     companion object {
         private const val IMG_URL = "https://www.cryptocompare.com/"

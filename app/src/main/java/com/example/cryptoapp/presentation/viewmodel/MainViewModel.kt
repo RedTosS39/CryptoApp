@@ -5,16 +5,17 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.cryptoapp.data.repository.RepositoryImpl
 import com.example.cryptoapp.domain.model.DomainData
-import com.example.cryptoapp.domain.repository.Repository
 import com.example.cryptoapp.domain.usecase.GetCurrentCoinUseCase
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val repository: Repository = RepositoryImpl(application)
-    private val getCurrentCoinUseCase = GetCurrentCoinUseCase(repository)
+class MainViewModel @Inject constructor(
+    application: Application,
+    getCurrentCoinUseCase: GetCurrentCoinUseCase
+) : AndroidViewModel(application) {
 
     private var _coinInfoList = MutableLiveData<List<DomainData>>()
     val coinInfoList: LiveData<List<DomainData>>
