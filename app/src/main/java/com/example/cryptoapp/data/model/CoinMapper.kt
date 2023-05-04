@@ -4,8 +4,9 @@ import com.example.cryptoapp.domain.model.DomainCoinInfo
 import com.example.cryptoapp.domain.model.DomainData
 import com.example.cryptoapp.domain.model.DomainDisplay
 import com.example.cryptoapp.domain.model.DomainUSD
+import javax.inject.Inject
 
-class CoinMapper {
+class CoinMapper @Inject constructor(){
     private fun mapToDomainUSD(usd: USD) = DomainUSD(usd.PRICE)
     private fun mapToDomainDisplay(display: DISPLAY) = DomainDisplay(mapToDomainUSD(display.USD))
     private fun mapToDomainCoinInfo(coinInfo: CoinInfo) =

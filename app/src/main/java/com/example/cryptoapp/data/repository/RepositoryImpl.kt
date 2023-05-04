@@ -15,11 +15,10 @@ import javax.inject.Inject
 class RepositoryImpl @Inject constructor(
     private val application: Application,
     private val mapper: CoinMapper,
+    private val apiService: CryptoApiService,
 ) : Repository {
 
-    private val apiService = CryptoApiService.create()
     private val liveData = MutableLiveData<List<DomainData>>()
-
 
     override suspend fun getDomainData(): LiveData<List<DomainData>> {
         getApiResult()
