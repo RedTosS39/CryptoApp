@@ -8,14 +8,17 @@ import androidx.work.WorkManager
 import com.example.cryptoapp.data.model.CoinMapper
 import com.example.cryptoapp.data.network.CryptoApiService
 import com.example.cryptoapp.data.workers.RefreshDataWorker
+import com.example.cryptoapp.di.qualifiers.AppScope
+import com.example.cryptoapp.di.qualifiers.ReleaseQualifier
 import com.example.cryptoapp.domain.model.DomainData
 import com.example.cryptoapp.domain.repository.Repository
 import javax.inject.Inject
 
+@AppScope
 class RepositoryImpl @Inject constructor(
     private val application: Application,
     private val mapper: CoinMapper,
-    private val apiService: CryptoApiService,
+    @ReleaseQualifier private val apiService: CryptoApiService,
 ) : Repository {
 
     private val liveData = MutableLiveData<List<DomainData>>()

@@ -1,7 +1,7 @@
-package com.example.cryptoapp
+package com.example.cryptoapp.app
 
 import android.app.Application
-import com.example.cryptoapp.di.DaggerAppComponent
+import com.example.cryptoapp.di.components.DaggerAppComponent
 
 class CryptoApp : Application() {
 

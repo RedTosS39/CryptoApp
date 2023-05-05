@@ -1,19 +1,15 @@
 package com.example.cryptoapp.presentation.viewmodel
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.cryptoapp.domain.usecase.GetCurrentCoinUseCase
 import javax.inject.Inject
+import javax.inject.Provider
+
 
 class MainViewModelFactory @Inject constructor(
-    val application: Application,
-    private val getCurrentCoinUseCase: GetCurrentCoinUseCase,
+    private val viewModelsProvider: @JvmSuppressWildcards Map<Class<out ViewModel>, Provider<ViewModel>>
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if(modelClass == MainViewModel::class.java) {
-            return MainViewModel(application, getCurrentCoinUseCase) as T
-        }
-        else throw RuntimeException("Unknown ViewModel::class $modelClass")
+       return viewModelsProvider[modelClass]?.get() as T
     }
 }
