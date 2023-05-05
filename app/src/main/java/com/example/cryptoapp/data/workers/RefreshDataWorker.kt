@@ -8,14 +8,16 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RefreshDataWorker(
+class RefreshDataWorker @Inject constructor(
     context: Context,
     workerParams: WorkerParameters,
+    private val apiService: CryptoApiService
 ) : CoroutineWorker(context, workerParams) {
 
     private val mapper = CoinMapper()
-    private val apiService = CryptoApiService.create()
+//    private val apiService = CryptoApiService.create()
 
     override suspend fun doWork(): Result {
         while (true) {

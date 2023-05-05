@@ -1,4 +1,4 @@
-package com.example.cryptoapp.di
+package com.example.cryptoapp.di.qualifiers
 
 import javax.inject.Scope
 
