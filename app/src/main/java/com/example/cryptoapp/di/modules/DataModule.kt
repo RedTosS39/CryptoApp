@@ -34,6 +34,7 @@ interface DataModule {
             return retrofit.create(CryptoApiService::class.java)
         }
 
+        @AppScope
         @TestQualifier
         @Provides
         fun provideTestApiService() : CryptoApiService {
