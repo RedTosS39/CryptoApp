@@ -13,6 +13,7 @@ interface ActivityComponent {
     fun inject(activity: MainActivity)
     fun inject(coinFragment: CoinFragment)
 
+
     @Subcomponent.Factory
     interface Factory {
 
