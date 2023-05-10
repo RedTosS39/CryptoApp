@@ -4,17 +4,18 @@ import android.content.Context
 import androidx.work.*
 import com.example.cryptoapp.data.model.CoinMapper
 import com.example.cryptoapp.data.network.CryptoApiService
+import com.example.cryptoapp.di.qualifiers.ReleaseQualifier
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class RefreshDataWorker @Inject constructor(
+class RefreshDataWorker(
     context: Context,
     workerParams: WorkerParameters,
     private val apiService: CryptoApiService,
-    private val mapper: CoinMapper
+    private val mapper: CoinMapper,
 ) : CoroutineWorker(context, workerParams) {
 
     override suspend fun doWork(): Result {
@@ -22,8 +23,19 @@ class RefreshDataWorker @Inject constructor(
             try {
                 val list = apiService.getCoins().Data
                 mapper.mapList(list)
-            } catch (_: Exception) { }
+            } catch (_: Exception) {
+            }
             delay(10000)
+        }
+    }
+
+    class Factory @Inject constructor(
+        @ReleaseQualifier
+        private val apiService: CryptoApiService,
+        private val mapper: CoinMapper,
+    ) : ChildWorkerFactory {
+        override fun create(context: Context, workerParams: WorkerParameters): ListenableWorker {
+            return RefreshDataWorker(context, workerParams, apiService, mapper)
         }
     }
 
@@ -31,12 +43,10 @@ class RefreshDataWorker @Inject constructor(
         const val WORKER_NAME = "RefreshDataWorker"
 
         fun makeRequest(): OneTimeWorkRequest {
-            val constraints = Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .build()
+            val constraints =
+                Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
 
-            return OneTimeWorkRequestBuilder<RefreshDataWorker>()
-                .setConstraints(constraints)
+            return OneTimeWorkRequestBuilder<RefreshDataWorker>().setConstraints(constraints)
                 .build()
         }
     }

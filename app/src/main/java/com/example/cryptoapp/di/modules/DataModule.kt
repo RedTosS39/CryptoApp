@@ -33,16 +33,5 @@ interface DataModule {
                 .build()
             return retrofit.create(CryptoApiService::class.java)
         }
-
-        @AppScope
-        @TestQualifier
-        @Provides
-        fun provideTestApiService() : CryptoApiService {
-            val retrofit = Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("BASE_URL")
-                .build()
-            return retrofit.create(CryptoApiService::class.java)
-        }
     }
 }

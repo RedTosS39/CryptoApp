@@ -18,8 +18,6 @@ class MainActivity : AppCompatActivity() {
 
     private val component by lazy {
         (application as CryptoApp).component
-            .activityComponentFactory()
-            .create("id")
     }
 
     private var coinFragment: CoinFragment? = null
