@@ -26,7 +26,7 @@ class CoinFragment : Fragment() {
     lateinit var viewModel: MainViewModel
 
     private val component by lazy {
-        (requireActivity().application as CryptoApp).component.activityComponentFactory().create("")
+        (requireActivity().application as CryptoApp).component
     }
 
     override fun onAttach(context: Context) {
