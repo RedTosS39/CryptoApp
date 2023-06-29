@@ -8,9 +8,11 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 class WorkerFactory @Inject constructor(
-    private val workerProvider:
-    @JvmSuppressWildcards Map<Class<out ListenableWorker>, Provider<ChildWorkerFactory>>,
-) : WorkerFactory() {
+
+    private val workerProvider: @JvmSuppressWildcards
+    Map<Class<out ListenableWorker>, Provider<ChildWorkerFactory>>,
+
+    ) : WorkerFactory() {
     override fun createWorker(
         appContext: Context,
         workerClassName: String,
@@ -18,11 +20,11 @@ class WorkerFactory @Inject constructor(
     ): ListenableWorker? {
         return when (workerClassName) {
             RefreshDataWorker::class.qualifiedName -> {
-                val childWorkerFactory = workerProvider[RefreshDataWorker::class.java]?.get()
-                return childWorkerFactory?.create(appContext, workerParameters)
+                val workerFactory = workerProvider[RefreshDataWorker::class.java]?.get()
+                workerFactory?.create(context = appContext, workerParameters)
             }
             else -> {
-                return null
+                null
             }
         }
     }

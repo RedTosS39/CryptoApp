@@ -8,23 +8,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.cryptoapp.databinding.FragmentCoinBinding
 import com.example.cryptoapp.presentation.app.CryptoApp
 import com.example.cryptoapp.presentation.viewmodel.MainViewModel
 import com.example.cryptoapp.presentation.viewmodel.MainViewModelFactory
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CoinFragment : Fragment() {
 
+    @Inject
+    lateinit var viewModelFactory: MainViewModelFactory
+    lateinit var viewModel: MainViewModel
     private var _binding: FragmentCoinBinding? = null
     private val binding
         get() = _binding ?: throw RuntimeException("FragmentCoinBinding == null")
-
-    @Inject
-    lateinit var viewModelFactory: MainViewModelFactory
-
-    lateinit var viewModel: MainViewModel
-
     private val component by lazy {
         (requireActivity().application as CryptoApp).component
     }
@@ -46,11 +45,15 @@ class CoinFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
-        viewModel.coinInfoList.observe(viewLifecycleOwner) {
-            Log.d("AAAA", "onViewCreated: ${it[0].domainCoinInfo.FullName}")
-        }
-
+        setupViewModel()
        binding.tvCoinLabel.text = getStringFromArgs()
+    }
+
+    private fun setupViewModel() {
+        lifecycleScope.launch {
+           viewModel.sharedFlow.collect() {
+           }
+        }
     }
 
     private fun getStringFromArgs(): String {
@@ -63,7 +66,6 @@ class CoinFragment : Fragment() {
     }
 
     companion object {
-
         const val NO_DATA = "NO DATA iN ARGUMENTS"
         const val EXTRA_STRING = "EXTRA_STRING"
         fun newCoinFragmentInstance(): CoinFragment {
