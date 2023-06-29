@@ -1,10 +1,14 @@
 package com.example.cryptoapp.presentation.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.cryptoapp.presentation.app.CryptoApp
 import com.example.cryptoapp.R
 import com.example.cryptoapp.databinding.ActivityMainBinding
@@ -12,6 +16,7 @@ import com.example.cryptoapp.presentation.adapter.CryptoAdapter
 import com.example.cryptoapp.presentation.view.CoinFragment.Companion.EXTRA_STRING
 import com.example.cryptoapp.presentation.viewmodel.MainViewModel
 import com.example.cryptoapp.presentation.viewmodel.MainViewModelFactory
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -56,9 +61,8 @@ class MainActivity : AppCompatActivity() {
         with(binding.recycler) {
             cryptoAdapter = CryptoAdapter()
             adapter = cryptoAdapter
-            viewModel.coinInfoList.observe(this@MainActivity) {
-                cryptoAdapter.submitList(it)
-            }
+
+            setupViewModel()
 
             cryptoAdapter.onItemClickListener = {
                 coinFragment = CoinFragment.newCoinFragmentInstance()
@@ -70,5 +74,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.recycler.itemAnimator = null
+    }
+
+    private fun setupViewModel() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.sharedFlow.collect() {
+                    Log.d("setupViewModel", "setupViewModel: ${it.get(1).domainCoinInfo.FullName}")
+                    cryptoAdapter.submitList(it)
+                }
+            }
+        }
     }
 }
