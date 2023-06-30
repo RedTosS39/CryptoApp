@@ -80,7 +80,6 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.sharedFlow.collect() {
-                    Log.d("setupViewModel", "setupViewModel: ${it.get(1).domainCoinInfo.FullName}")
                     cryptoAdapter.submitList(it)
                 }
             }

@@ -25,7 +25,7 @@ class RefreshDataWorker(
                 mapper.mapList(list)
             } catch (_: Exception) {
             }
-            delay(10000)
+            delay(1000)
         }
     }
 
